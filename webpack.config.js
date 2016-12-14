@@ -8,6 +8,14 @@ var config = {
         path:path.resolve(__dirname,'dist'),
         filename:'bundle.js'
     },
+    devServer:{
+        contentBase:'dist',
+        inline:true,
+        port:8080,
+        stats:{
+            color:true
+        }
+    },
     module:{
         loaders:[
             {

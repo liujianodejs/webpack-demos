@@ -56,6 +56,21 @@
     component()
 ```
 
+> index.html
+
+```
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <script src="./dist/bundle.js"></script>
+    </body>
+    </html>
+```
+
 > package.json
 
 ```
@@ -172,10 +187,144 @@
 
 ## 启动本地服务器
 
+> 初始化
 
+```
+    npm install webpack-dev-server --save-dev
+```
 
+> 配置
 
+package.json
 
+```
+    "scripts": {
+         "dev":"webpack-dev-server --progress --port 8080 --content-base dist --hot"
+      }
+```
 
+或 package.json
 
+```
+    "scripts": {
+       "dev":"webpack-dev-server --progress"
+     }
+```
 
+webpack.config.js
+
+```
+    +
+     devServer:{
+            contentBase:'dist',
+            inline:true,
+            port:8080,
+            stats:{
+                color:true
+            }
+        },
+```
+
+> 运行
+
+```
+    $ npm run dev
+```
+
+## 打包react
+
+> 初始化
+
+```
+    $ npm install react react-dom --save-dev
+    $ npm install babel-preset-react --save-dev
+    $ cd src
+    $ mkdir components containers
+    $ rm -rf components.js
+    $ cd components
+    $ touch Header.js Footer.js
+    $ cd ../containers
+    $ touch App.js
+```
+
+> .babelrc
+
+```
+    {
+      "presets":["es2015","react"]
+    }
+```
+
+> Header.js
+
+```
+    import React ,{ Component} from 'react'
+    
+    export default class Header extends Component{
+        render(){
+            return <div>
+                <h1> 我是header </h1>
+            </div>
+        }
+    }
+```
+
+> Footer.js
+
+```
+    import React ,{ Component} from 'react'
+    
+    class Footer extends Component{
+        render(){
+            return <div>
+                <h1> 我是footer </h1>
+            </div>
+        }
+    }
+    
+    export default  Footer
+```
+
+> App.js
+
+```
+    import React , { Component } from 'react'
+    import Header from '../components/Header'
+    import Footer from '../components/Footer'
+    
+    export default class App extends Component{
+        render() {
+            return (
+                <div>
+                    <Header />
+                    <Footer />
+                </div>
+            )
+        }
+    }
+```
+
+> index.js
+
+```
+    import  React from 'react'
+    import  { render } from 'react-dom'
+    import App from './containers/App'
+    
+    render(<App />,document.getElementById('app'))
+```
+
+> index.html
+
+```
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title><%= htmlWebpackPlugin.options.title %></title>
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+    </html>
+```
