@@ -328,3 +328,104 @@ webpack.config.js
     </body>
     </html>
 ```
+
+> 运行
+
+```
+    $ npm run dev
+```
+
+## 在webpack中加载css
+
+> 初始化
+
+```
+    $ npm install style-loader css-loader --save-dev
+    $ npm install less less-loader --save-dev
+    $ cd src/components
+    $ mkdir Header Footer
+    $ mv Header.js Header
+    $ mv Footer.js Footer
+    $ cd ../containers
+    $ mkdir App
+    $ mv App.js App
+    $ cd App
+    $ mv App.js index.js
+    $ touch index.css
+    $ cd ../../components/Footer
+    $ mv Footer.js index.js
+    $ touch index.css
+    $ touch index.less
+    $ cd ../Header
+    $ mv Header.js index.js
+    $ touch index.css
+```
+
+> Footer/index.js   
+
+```
+    import React ,{ Component} from 'react'
+    import './index.css'
+    import './index.less'
+    
+    
+    class Footer extends Component{
+        render(){
+            return <div>
+                <h1 className="footer"> 我是footer </h1>
+                <h1 className="footer2"> 我是footer2 </h1>
+    
+            </div>
+        }
+    }
+    
+    export default  Footer
+```
+
+> Footer/index.css
+
+```
+    .footer{
+        color: red;
+    }
+```
+
+> Footer/index.less
+
+```
+    @color: #00ff00;
+    
+    .footer2 {
+      background-color: @color;
+    }
+```
+
+> webpack.config.js
+
+```
+    module:{
+            loaders:[
+                {
+                    test:/\.js$/,
+                    loader:'babel',
+                    exclude:/node_modules/
+                },
+                {
+                    test:/\.css$/,
+                    loader:'style!css',
+                    include:path.resolve(__dirname,'src')
+                },
+                {
+                    test:/\.less/,
+                    loader:'style!css!less',
+                    include:path.resolve(__dirname,'src')
+                }
+            ]
+        },
+```
+
+> 运行
+
+```
+    npm run dev
+```
