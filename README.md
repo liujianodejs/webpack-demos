@@ -429,3 +429,88 @@ webpack.config.js
 ```
     npm run dev
 ```
+
+## 单元测试
+
+* karma
+* mocha
+
+> 初始化
+
+```
+    $ npm install karma karma-chrome-launcher mocha karma-mocha --save-dev
+    $ ./node_modules/.bin/karma init
+    $ mkdir test && cd test
+    $ touch index.spec.js
+```
+ 
+ > index.spec.js
+ 
+```
+    describe('hello test', () =>{
+        it('test example', () => {
+            
+        })
+    })
+```
+ 
+ > package.json
+ 
+```
+    "scripts": {
+        "build": "webpack --progress --colors",
+        "dev": "webpack-dev-server --progress",
+        "test":"karma start"
+      },
+```
+ 
+> 运行
+ 
+```
+    npm run test
+```
+ 
+* chai
+
+> 初始化
+
+```
+    $ npm install chai karma-chai --save-dev
+```
+ 
+> index.spec.js 
+
+```
+    describe('hello test', () =>{
+        it('test example', () => {
+    
+        })
+        it('chai example', () => {
+            expect('hi').to.equal('hi')
+        })
+        it('chai test 3', () => {
+            throw new Error("测试运行失败")
+        })
+    })
+```
+ 
+> karma.conf.js
+
+```
+    frameworks: ['mocha','chai']
+``` 
+ 
+> 运行
+  
+```
+    npm run test
+```
+  
+## 模块代码拆分
+ 
+ 
+ 
+ 
+ 
+ 
+ 
