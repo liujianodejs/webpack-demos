@@ -506,8 +506,144 @@ webpack.config.js
     npm run test
 ```
   
-## 模块代码拆分
+## Eslint
+
+> 初始化
+
+```
+    npm install eslint --save-dev
+    node_modules/.bin/eslint --init
+```
  
+> 运行
+
+```
+    node_modules/.bin/eslint src
+```
+
+> 修复
+
+```
+    node_modules/.bin/eslint src/ --fix
+```
+ 
+
+## 打包完成后自动打开浏览器
+
+> 初始化
+
+```
+    $ npm install open-browser-webpack-plugin --save-dev
+``` 
+ 
+> webpack.config.js
+
+```
+    +
+    var openBrowserPlugin = require('open-browser-webpack-plugin')
+    new openBrowserPlugin({
+        url:'http://localhost:8080'
+    )
+``` 
+
+> 运行
+  
+```
+    npm run dev
+``` 
+
+## 在生产环境下压缩产出文件
+
+> 初始化
+
+```
+    $ cp webpack.config.js webpack.config.prod.js
+``` 
+ 
+> webpack.config.prod.js
+
+```
+    +
+    var uglifyPlugin = webpack.optimize.UglifyJsPlugin;
+    new uglifyPlugin({
+        compress:false
+    })
+```
+
+> 运行
+
+```
+    webpack --config webpack.config.prod.js
+```
+ 
+## banner插件
+
+> webpack.config.prod.js
+
+```
+   new webpack.BannerPlugin("作者:刘嘉\n日期:"+new Date()+"\n协议:MIT\n版本号:1.0.0")
+``` 
+
+> 运行
+
+```
+    webpack --config webpack.config.prod.js
+```
+
+## 提取文本插件(css) 
+
+> 初始化
+
+```
+    $ npm install extract-text-webpack-plugin --save-dev
+```
+ 
+> webpack.config.js 
+
+```
+    +
+    var extractTextPlugin = require('extract-text-webpack-plugin');
+    
+     {
+        test:/\.css$/,
+        //loader:'style!css',
+        loader:extractTextPlugin.extract("style","css"),
+        include:path.resolve(__dirname,'src')
+     },
+                
+    +
+    new extractTextPlugin("style.css"),
+```
+ 
+> 运行
+   
+```
+   npm run dev
+``` 
+
+## 文件名增加hash值
+
+* hash
+* chunkhash
+* contenthash
+
+> 方式一
+
+```
+     output:{
+            path:path.resolve(__dirname,'dist'),
+            filename:'bundle.[hash:6].js'
+        },
+```
+ 
+> 方式二 
+
+```
+      output:{
+             path:path.resolve(__dirname,'dist'),
+             filename:'bundle.js?.[hash:6]'
+        },
+```
  
  
  
